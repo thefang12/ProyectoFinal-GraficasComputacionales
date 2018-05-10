@@ -3,6 +3,7 @@
 
 #include "stdafx.h"
 #include "ProyectoFinal-CasaSimpson.h"
+#include "Camara.h"
 // omiTest.cpp : Defines the entry point for the console application.
 //
 
@@ -36,25 +37,26 @@ GLint face[6][4] = {
   { 0, 1, 5, 4 },
   { 2, 3, 7, 6 },
 };
-GLfloat l0ambI = 0.4;
-GLfloat l0diffI = 0.4;
-GLfloat l0specI = 0.4;
+GLfloat l0ambI = 0.8;
+GLfloat l0diffI = 0.8;
+GLfloat l0specI = 0.8;
 GLfloat l1diffI = 0.2;
 GLfloat l1specI = 0.2;
 GLfloat l2diffI = 0.4;
 GLfloat l2specI = 0.2;
 GLfloat l3diffI = 0.4;
 GLfloat l3specI = 0.2;
-GLfloat position0[] = { 0.0, 0.0, 2.0, 1.0 };
+GLfloat position0[] = { 0.0, 10.0, 0.0, 0.0 };
 GLfloat position1[] = { 0.0, -5.0, 0.0, 1.0 };
 GLfloat angle[1] = { 10 };
 GLfloat exponent[1] = { 50.0 };
 GLfloat dir[3] = { 0.0, -10, 0.0 };
-
-ObjModel obj("pruebas/prueba_lowpoly2_shrunk.obj");
+Camera cam;
+ObjModel obj;
 void init(void) {
   // white light
   // Set light position: at location or at infinity
+  obj = ObjModel("pruebas/lowPoly_SalaColores_shrunk.obj");
   glLightfv(GL_LIGHT0, GL_POSITION, position0);
   // User defines intensities
   // TODO varible controlled intensities
@@ -149,8 +151,8 @@ void init(void) {
   glHint(GL_FOG_HINT, GL_DONT_CARE);
   // Enable depth testing (for hidden surface removal)
   glEnable(GL_DEPTH_TEST);
-  glCullFace(GL_BACK);
-  glEnable(GL_CULL_FACE);
+  //glCullFace(GL_BACK);
+  //glEnable(GL_CULL_FACE);
 }
 float prodPunto(float vectorA[3], float vectorB[3]) {
   return vectorA[0] * vectorB[0] + vectorA[1] * vectorB[1] +
@@ -375,14 +377,14 @@ void reshape(int w, int h) {
   glLoadIdentity();
   // Then set perpective projection parameters based
   // on aspect ratio
-  gluPerspective(20.0, (GLfloat)w / (GLfloat)h, 0.10, 100.0);
+  gluPerspective(30.0, (GLfloat)w / (GLfloat)h, 0.10, 100.0);
 
   // Set the model view matrix to identity
   glMatrixMode(GL_MODELVIEW);
   glLoadIdentity();
 
   // Set the "look at" point
-  gluLookAt(0.0, 50.0, 50.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
+  gluLookAt(0.0, 20.0, 20.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0);
 }
 void keyboard(unsigned char key, int x, int y) {
   switch (key) {
